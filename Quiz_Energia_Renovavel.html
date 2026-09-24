@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste Vocacional: Técnico em Energia Renovável</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-slate-900">
+  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">
+          <i class="fa-solid fa-leaf text-xl"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight">EcoPerfil Técnico</h1>
+          <p class="text-xs text-slate-400">Teste Vocacional de Energias Renováveis</p>
+        </div>
+      </div>
+      <button onclick="toggleQRModal()" class="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm px-3.5 py-2 rounded-xl transition shadow-lg shadow-emerald-500/10">
+        <i class="fa-solid fa-qrcode text-base"></i>
+        <span>Gerar QR Code</span>
+      </button>
+    </div>
+  </header>
+  <main class="max-w-3xl mx-auto px-4 py-8 flex-grow w-full flex items-center justify-center">
+    <div id="start-card" class="bg-slate-800/60 border border-slate-700/60 rounded-3xl p-6 sm:p-10 text-center shadow-2xl backdrop-blur-sm w-full">
+      <div class="inline-flex p-4 bg-emerald-500/10 text-emerald-400 rounded-2xl border border-emerald-500/20 mb-6">
+        <i class="fa-solid fa-bolt-lightning text-4xl"></i>
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-extrabold mb-4 text-white">Qual área da Energia Renovável combina mais com você?</h2>
+      <p class="text-slate-300 text-sm sm:text-base mb-8 max-w-xl mx-auto leading-relaxed">
+        Responda às 10 perguntas rápidas e descubra qual especialidade técnica (Solar, Eólica, Biomassa ou Redes Inteligentes & Armazenamento) tem mais a ver com o seu perfil!
+      </p>
+      <button onclick="startQuiz()" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-base px-8 py-4 rounded-xl shadow-lg shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition">
+        Iniciar Teste Vocacional
+      </button>
+    </div>
+    <div id="quiz-card" class="hidden bg-slate-800/60 border border-slate-700/60 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-sm w-full">
+      <div class="mb-6">
+        <div class="flex justify-between text-xs font-semibold text-slate-400 mb-2">
+          <span id="progress-text">Pergunta 1 de 10</span>
+          <span id="progress-percent">10%</span>
+        </div>
+        <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+          <div id="progress-bar" class="bg-emerald-400 h-2.5 rounded-full transition-all duration-300" style="width: 10%"></div>
+        </div>
+      </div>
+      <h3 id="question-title" class="text-lg sm:text-xl font-bold mb-6 text-white leading-snug"></h3>
+      <div id="options-container" class="space-y-3 mb-6"></div>
+    </div>
+    <div id="result-card" class="hidden bg-slate-800/60 border border-slate-700/60 rounded-3xl p-6 sm:p-10 text-center shadow-2xl backdrop-blur-sm w-full">
+      <div class="inline-flex p-4 bg-emerald-500/10 text-emerald-400 rounded-2xl border border-emerald-500/20 mb-4">
+        <i id="result-icon" class="fa-solid fa-award text-4xl"></i>
+      </div>
+      <span class="text-xs uppercase tracking-widest font-bold text-emerald-400 block mb-2">Resultado do seu Teste</span>
+      <h2 id="result-title" class="text-2xl sm:text-3xl font-extrabold text-white mb-4"></h2>
+      <p id="result-description" class="text-slate-300 text-sm sm:text-base mb-6 text-left sm:text-center leading-relaxed"></p>
+      <div class="bg-slate-900/60 border border-slate-700/50 rounded-2xl p-5 mb-8 text-left">
+        <h4 class="font-bold text-xs text-slate-300 mb-3 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-list-check text-emerald-400"></i> Habilidades e Atividades Principais:
+        </h4>
+        <ul id="result-skills" class="space-y-2 text-sm text-slate-300"></ul>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <button onclick="restartQuiz()" class="bg-slate-700 hover:bg-slate-600 text-white font-semibold px-6 py-3.5 rounded-xl transition text-sm">Refazer Teste</button>
+        <button onclick="toggleQRModal()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-500/20 transition flex items-center justify-center gap-2 text-sm">
+          <i class="fa-solid fa-qrcode"></i> Baixar / Compartilhar QR Code
+        </button>
+      </div>
+    </div>
+  </main>
+  <div id="qr-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-slate-800 border border-slate-700 rounded-3xl p-6 sm:p-8 max-w-sm w-full text-center relative shadow-2xl">
+      <button onclick="toggleQRModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <h3 class="text-xl font-bold text-white mb-2">QR Code do Teste</h3>
+      <p class="text-xs text-slate-400 mb-6">Escaneie com a câmera do celular para abrir o teste em qualquer lugar público!</p>
+      <div class="bg-white p-4 rounded-2xl inline-block mb-4 shadow-inner">
+        <div id="qrcode" class="flex justify-center"></div>
+      </div>
+      <p class="text-xs text-slate-400 break-all bg-slate-900/80 p-2.5 rounded-xl border border-slate-700/60 font-mono mb-4" id="modal-url"></p>
+      <div class="space-y-2">
+        <button onclick="downloadQRCode()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 rounded-xl text-sm transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-download"></i> Baixar Imagem do QR Code
+        </button>
+        <button onclick="copyURL()" id="copy-btn" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-semibold py-2.5 rounded-xl text-sm transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-copy"></i> Copiar Link
+        </button>
+      </div>
+    </div>
+  </div>
+  <footer class="border-t border-slate-800 bg-slate-900/50 py-4 text-center text-xs text-slate-500">
+    <p>© EcoPerfil - Teste Vocacional Técnico em Energia Renovável</p>
+  </footer>
+  <script>
+    const questions = [
+      { title: "1. Em qual tipo de ambiente de trabalho você se sente mais motivado?", options: [{ text: "Trabalhando ao ar livre, em telhados ou campos abertos ensolarados.", category: "SOLAR" }, { text: "Em grandes alturas e lidando com estruturas mecânicas robustas em campo.", category: "EOLICA" }, { text: "Em usinas de processamento, laboratórios ou ambientes industriais/agrícolas.", category: "BIOMASSA" }, { text: "Em centros de controle, salas de comando ou analisando quadros elétricos.", category: "REDES" }] },
+      { title: "2. Qual tipo de desafio técnico você mais gosta de resolver?", options: [{ text: "Dimensionar painéis fotovoltaicos e garantir a máxima captação de luz solar.", category: "SOLAR" }, { text: "Reparar turbinas mecânicas, caixas de engrenagens e componentes expostos ao vento.", category: "EOLICA" }, { text: "Otimizar processos de conversão de resíduos orgânicos em biogás ou biocombustíveis.", category: "BIOMASSA" }, { text: "Resolver problemas de distribuição elétrica, baterias e estabilidade de rede.", category: "REDES" }] },
+      { title: "3. Se você tivesse que escolher uma ferramenta principal para o seu dia a dia:", options: [{ text: "Multímetro digital, alicate amperímetro e conectores elétricos.", category: "SOLAR" }, { text: "Equipamentos de segurança para altura (cinto/talabarte) e chaves industriais.", category: "EOLICA" }, { text: "Analisadores de gases, reatores ou instrumentos de medição química.", category: "BIOMASSA" }, { text: "Softwares de monitoramento, inversores inteligentes e controladores digitais.", category: "REDES" }] },
+      { title: "4. Qual destas áreas do conhecimento mais desperta o seu interesse?", options: [{ text: "Física óptica e eletricidade de corrente contínua.", category: "SOLAR" }, { text: "Aerodinâmica, mecânica de fluidos e resistência das estruturas.", category: "EOLICA" }, { text: "Química orgânica, biotecnologia e ciclo de decomposição da matéria.", category: "BIOMASSA" }, { text: "Eletrônica de potência, automação e inteligência de redes.", category: "REDES" }] },
+      { title: "5. Como você gostaria de ver o impacto direto do seu trabalho?", options: [{ text: "Vendo casas, comércios e indústrias gerando sua própria energia solar.", category: "SOLAR" }, { text: "Observando parques eólicos gigantescos gerando energia para cidades inteiras.", category: "EOLICA" }, { text: "Transformando o lixo orgânico e restos agrícolas em energia limpa.", category: "BIOMASSA" }, { text: "Garantindo zero desperdício e total estabilidade na rede elétrica do país.", category: "REDES" }] },
+      { title: "6. Qual atividade de rotina parece mais atrativa?", options: [{ text: "Montagem física de estruturas modulares e cabeamento de sistemas solares.", category: "SOLAR" }, { text: "Manutenção preventiva em aerogeradores e inspeção de pás eólicas.", category: "EOLICA" }, { text: "Supervisão de biodigestores e controle de fermentação/combustão.", category: "BIOMASSA" }, { text: "Configuração de banco de baterias e gerenciamento de carga em tempo real.", category: "REDES" }] },
+      { title: "7. O que mais te impressiona no futuro das energias limpas?", options: [{ text: "A popularização do acesso à energia solar em qualquer telhado.", category: "SOLAR" }, { text: "A força inesgotável e a escala monumental dos ventos.", category: "EOLICA" }, { text: "A economia circular: reaproveitar o que seria descartado no meio ambiente.", category: "BIOMASSA" }, { text: "A modernização das redes para 'Smart Grids' totalmente digitais.", category: "REDES" }] },
+      { title: "8. Em relação ao local de trabalho, o que prefere?", options: [{ text: "Projetos urbanos e rurais variados, mudando de local a cada instalação.", category: "SOLAR" }, { text: "Atuar em grandes parques eólicos no litoral ou em serras distantes.", category: "EOLICA" }, { text: "Atuar em usinas ligadas ao setor do agronegócio ou tratamento de resíduos.", category: "BIOMASSA" }, { text: "Trabalhar em subestações de energia, centros operacionais ou indústrias.", category: "REDES" }] },
+      { title: "9. Qual foco de segurança do trabalho você acha mais marcante?", options: [{ text: "Proteção contra riscos elétricos (NR-10) e cuidados em coberturas.", category: "SOLAR" }, { text: "Rigor absoluto em trabalho em altura (NR-35) e resgate técnico.", category: "EOLICA" }, { text: "Manuseio seguro de gases pressurizados, materiais orgânicos e biocombustíveis.", category: "BIOMASSA" }, { text: "Segurança no manuseio de alta tensão, curto-circuito e automação crítica.", category: "REDES" }] },
+      { title: "10. Qual destas qualidades pessoais melhor define você?", options: [{ text: "Prático, detalhista e ágil em montagens e conexões físicas.", category: "SOLAR" }, { text: "Resistente, corajoso com alturas e bom raciocínio mecânico.", category: "EOLICA" }, { text: "Curioso sobre biologia/química, focado em sustentabilidade e meio ambiente.", category: "BIOMASSA" }, { text: "Analítico, focado em lógica, dados e tecnologia avançada.", category: "REDES" }] }
+    ];
+    const profiles = {
+      SOLAR: { title: "Técnico em Energia Solar Fotovoltaica", icon: "fa-solid fa-sun", description: "Seu perfil é ideal para a tecnologia solar! Você combina habilidade prática, facilidade com montagens elétricas e atração por um dos mercados que mais cresce no mundo.", skills: ["Instalação e alinhamento de painéis fotovoltaicos e inversores.", "Medições elétricas em corrente contínua e alternada.", "Dimensionamento básico de sistemas conectados à rede e isolados."] },
+      EOLICA: { title: "Técnico em Energia Eólica", icon: "fa-solid fa-wind", description: "Você tem o perfil perfeito para encarar as alturas! Sua aptidão mecânica e disposição para trabalhos em campo tornam você ideal para atuar nos grandes parques eólicos.", skills: ["Manutenção mecânica e elétrica de grandes aerogeradores.", "Execução de normas de segurança em altura (NR-35) e locais confinados.", "Inspeção e diagnóstico de turbinas, freios e pás eólicas."] },
+      BIOMASSA: { title: "Técnico em Biomassa e Bioenergia", icon: "fa-solid fa-recycle", description: "Você se destaca pelo foco em sustentabilidade e processos biológicos! Seu perfil é voltado para transformar resíduos orgânicos e materiais agrícolas em fontes limpas de energia.", skills: ["Operação de biodigestores, geradores a biogás e caldeiras.", "Análise e controle de processos de transformação de resíduos.", "Gestão de bioenergia voltada para a economia circular e o agronegócio."] },
+      REDES: { title: "Técnico em Eficiência e Redes Inteligentes (Smart Grids)", icon: "fa-solid fa-network-wired", description: "Você é o perfil analítico e tecnológico do setor! Seu forte é a automação, sistemas de armazenamento por bateria (BESS) e o controle inteligente do fluxo elétrico.", skills: ["Monitoramento e automação de redes e inversores inteligentes.", "Gerenciamento de sistemas de armazenamento de energia em baterias.", "Análise de eficiência energética e prevenção de falhas em subestações."] }
+    };
+    let currentQuestionIndex = 0;
+    let scores = { SOLAR: 0, EOLICA: 0, BIOMASSA: 0, REDES: 0 };
+    function startQuiz() { currentQuestionIndex = 0; scores = { SOLAR: 0, EOLICA: 0, BIOMASSA: 0, REDES: 0 }; document.getElementById('start-card').classList.add('hidden'); document.getElementById('result-card').classList.add('hidden'); document.getElementById('quiz-card').classList.remove('hidden'); showQuestion(); }
+    function showQuestion() { const q = questions[currentQuestionIndex]; const total = questions.length; document.getElementById('progress-text').innerText = `Pergunta ${currentQuestionIndex + 1} de ${total}`; const percent = Math.round(((currentQuestionIndex + 1) / total) * 100); document.getElementById('progress-percent').innerText = `${percent}%`; document.getElementById('progress-bar').style.width = `${percent}%`; document.getElementById('question-title').innerText = q.title; const optionsContainer = document.getElementById('options-container'); optionsContainer.innerHTML = ''; q.options.forEach((opt) => { const btn = document.createElement('button'); btn.className = "w-full text-left p-4 rounded-2xl bg-slate-700/40 hover:bg-slate-700 border border-slate-600/50 hover:border-emerald-500/50 transition-all flex items-start gap-3.5 group cursor-pointer active:scale-[0.99]"; btn.onclick = () => selectOption(opt.category); btn.innerHTML = `<div class="mt-0.5 min-w-[20px] h-[20px] rounded-full border-2 border-slate-400 group-hover:border-emerald-400 flex items-center justify-center transition"><div class="w-2 h-2 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-100 transition"></div></div><span class="text-sm sm:text-base text-slate-200 group-hover:text-white leading-snug">${opt.text}</span>`; optionsContainer.appendChild(btn); }); }
+    function selectOption(category) { scores[category]++; currentQuestionIndex++; if (currentQuestionIndex < questions.length) { showQuestion(); } else { showResult(); } }
+    function showResult() { document.getElementById('quiz-card').classList.add('hidden'); document.getElementById('result-card').classList.remove('hidden'); let topCategory = 'SOLAR'; let maxScore = -1; for (const cat in scores) { if (scores[cat] > maxScore) { maxScore = scores[cat]; topCategory = cat; } } const profile = profiles[topCategory]; document.getElementById('result-title').innerText = profile.title; document.getElementById('result-description').innerText = profile.description; document.getElementById('result-icon').className = `${profile.icon} text-4xl`; const skillsContainer = document.getElementById('result-skills'); skillsContainer.innerHTML = ''; profile.skills.forEach(skill => { const li = document.createElement('li'); li.className = 'flex items-start gap-2.5'; li.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 mt-1 text-sm"></i> <span class="leading-snug">${skill}</span>`; skillsContainer.appendChild(li); }); }
+    function restartQuiz() { startQuiz(); }
+    function toggleQRModal() { const modal = document.getElementById('qr-modal'); if (modal.classList.contains('opacity-0')) { modal.classList.remove('opacity-0', 'pointer-events-none'); generateQRCode(); } else { modal.classList.add('opacity-0', 'pointer-events-none'); } }
+    function generateQRCode() { const currentURL = window.location.href; document.getElementById('modal-url').innerText = currentURL; const qrContainer = document.getElementById("qrcode"); qrContainer.innerHTML = ""; new QRCode(qrContainer, { text: currentURL, width: 180, height: 180, colorDark: "#0f172a", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H }); }
+    function downloadQRCode() { const img = document.querySelector("#qrcode img"); const canvas = document.querySelector("#qrcode canvas"); let imageSrc = img && img.src ? img.src : (canvas ? canvas.toDataURL("image/png") : ""); if (imageSrc) { const link = document.createElement("a"); link.href = imageSrc; link.download = "qrcode-teste-vocacional.png"; document.body.appendChild(link); link.click(); document.body.removeChild(link); } else { alert("Aguarde o QR Code carregar."); } }
+    function copyURL() { const currentURL = window.location.href; if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(currentURL).then(showCopyFeedback); } else { const textarea = document.createElement('textarea'); textarea.value = currentURL; document.body.appendChild(textarea); textarea.select(); document.execCommand('copy'); document.body.removeChild(textarea); showCopyFeedback(); } }
+    function showCopyFeedback() { const btn = document.getElementById('copy-btn'); btn.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i> Copiado!`; setTimeout(() => { btn.innerHTML = `<i class="fa-solid fa-copy"></i> Copiar Link`; }, 2000); }
+  </script>
+</body>
+</html>
