@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Vocacional - Energias Renováveis</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;padding:20px;background:linear-gradient(135deg,#dff7e5,#eef9ff);color:#173b25}
+.card{max-width:700px;margin:auto;background:white;padding:28px;border-radius:20px;box-shadow:0 8px 30px #0002}
+h1{text-align:center;color:#16733c}.sub{text-align:center;color:#666}
+.pergunta{margin:28px 0}.opcao{display:block;padding:13px;margin:8px 0;border:2px solid #e1e8e3;border-radius:12px;cursor:pointer}
+button{width:100%;padding:16px;border:0;border-radius:12px;background:#16733c;color:white;font-size:18px;font-weight:bold}
+#resultado{display:none;margin-top:25px;padding:22px;border-radius:15px;background:#eef9f1;text-align:center}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>⚡ Quiz Vocacional</h1>
+<p class="sub">Energias Renováveis — descubra qual área combina mais com você.</p>
+<form id="quiz">
+
+<div class="pergunta"><h3>1. Qual atividade mais chama sua atenção?</h3>
+<label class="opcao"><input type="radio" name="q1" value="solar"> Trabalhar com painéis solares e eletricidade</label>
+<label class="opcao"><input type="radio" name="q1" value="eolica"> Trabalhar com máquinas e turbinas</label>
+<label class="opcao"><input type="radio" name="q1" value="manutencao"> Consertar e testar equipamentos</label>
+<label class="opcao"><input type="radio" name="q1" value="sustentabilidade"> Criar soluções para o meio ambiente</label></div>
+
+<div class="pergunta"><h3>2. Qual ambiente de trabalho você prefere?</h3>
+<label class="opcao"><input type="radio" name="q2" value="solar"> Instalações de sistemas solares</label>
+<label class="opcao"><input type="radio" name="q2" value="eolica"> Parques eólicos</label>
+<label class="opcao"><input type="radio" name="q2" value="manutencao"> Oficina ou área técnica</label>
+<label class="opcao"><input type="radio" name="q2" value="sustentabilidade"> Empresa ou projeto ambiental</label></div>
+
+<div class="pergunta"><h3>3. O que você mais gosta de fazer?</h3>
+<label class="opcao"><input type="radio" name="q3" value="solar"> Montar e entender circuitos elétricos</label>
+<label class="opcao"><input type="radio" name="q3" value="eolica"> Entender como máquinas funcionam</label>
+<label class="opcao"><input type="radio" name="q3" value="manutencao"> Encontrar e solucionar falhas</label>
+<label class="opcao"><input type="radio" name="q3" value="sustentabilidade"> Pensar em soluções sustentáveis</label></div>
+
+<div class="pergunta"><h3>4. Qual matéria você prefere?</h3>
+<label class="opcao"><input type="radio" name="q4" value="solar"> Eletricidade</label>
+<label class="opcao"><input type="radio" name="q4" value="eolica"> Física</label>
+<label class="opcao"><input type="radio" name="q4" value="manutencao"> Mecânica e tecnologia</label>
+<label class="opcao"><input type="radio" name="q4" value="sustentabilidade"> Meio ambiente</label></div>
+
+<div class="pergunta"><h3>5. Como você se considera?</h3>
+<label class="opcao"><input type="radio" name="q5" value="solar"> Interessado em tecnologia elétrica</label>
+<label class="opcao"><input type="radio" name="q5" value="eolica"> Curioso sobre máquinas</label>
+<label class="opcao"><input type="radio" name="q5" value="manutencao"> Prático e bom em resolver problemas</label>
+<label class="opcao"><input type="radio" name="q5" value="sustentabilidade"> Preocupado com o futuro do planeta</label></div>
+
+<div class="pergunta"><h3>6. Qual projeto você gostaria de participar?</h3>
+<label class="opcao"><input type="radio" name="q6" value="solar"> Instalar um sistema de energia solar</label>
+<label class="opcao"><input type="radio" name="q6" value="eolica"> Acompanhar uma turbina eólica</label>
+<label class="opcao"><input type="radio" name="q6" value="manutencao"> Fazer manutenção em equipamentos</label>
+<label class="opcao"><input type="radio" name="q6" value="sustentabilidade"> Desenvolver um projeto ambiental</label></div>
+
+<div class="pergunta"><h3>7. Qual habilidade você gostaria de desenvolver?</h3>
+<label class="opcao"><input type="radio" name="q7" value="solar"> Instalação fotovoltaica</label>
+<label class="opcao"><input type="radio" name="q7" value="eolica"> Operação de sistemas eólicos</label>
+<label class="opcao"><input type="radio" name="q7" value="manutencao"> Manutenção elétrica e mecânica</label>
+<label class="opcao"><input type="radio" name="q7" value="sustentabilidade"> Gestão ambiental e eficiência energética</label></div>
+
+<div class="pergunta"><h3>8. Qual desafio parece mais interessante?</h3>
+<label class="opcao"><input type="radio" name="q8" value="solar"> Aumentar a eficiência de um painel solar</label>
+<label class="opcao"><input type="radio" name="q8" value="eolica"> Melhorar o desempenho de uma turbina</label>
+<label class="opcao"><input type="radio" name="q8" value="manutencao"> Descobrir por que uma máquina parou</label>
+<label class="opcao"><input type="radio" name="q8" value="sustentabilidade"> Reduzir o impacto ambiental de uma empresa</label></div>
+
+<div class="pergunta"><h3>9. Que tipo de trabalho você prefere?</h3>
+<label class="opcao"><input type="radio" name="q9" value="solar"> Trabalho técnico com eletricidade</label>
+<label class="opcao"><input type="radio" name="q9" value="eolica"> Trabalho com equipamentos de grande porte</label>
+<label class="opcao"><input type="radio" name="q9" value="manutencao"> Trabalho prático e de campo</label>
+<label class="opcao"><input type="radio" name="q9" value="sustentabilidade"> Trabalho com projetos e planejamento</label></div>
+
+<div class="pergunta"><h3>10. Qual frase combina mais com você?</h3>
+<label class="opcao"><input type="radio" name="q10" value="solar"> Gosto de entender como a energia elétrica funciona</label>
+<label class="opcao"><input type="radio" name="q10" value="eolica"> Gosto de máquinas, tecnologia e desafios</label>
+<label class="opcao"><input type="radio" name="q10" value="manutencao"> Gosto de colocar a mão na massa e resolver problemas</label>
+<label class="opcao"><input type="radio" name="q10" value="sustentabilidade"> Quero contribuir para um futuro sustentável</label></div>
+
+<button type="submit">Ver meu resultado</button>
+</form>
+
+<div id="resultado"><h2 id="titulo"></h2><p id="texto"></p><b id="porcentagem"></b><br><br>
+<button type="button" onclick="location.reload()">Refazer o quiz</button></div>
+</div>
+
+<script>
+document.getElementById("quiz").addEventListener("submit",function(e){
+e.preventDefault();
+let r=document.querySelectorAll("input:checked");
+if(r.length<10){alert("Responda todas as 10 perguntas.");return}
+let p={solar:0,eolica:0,manutencao:0,sustentabilidade:0};
+r.forEach(x=>p[x.value]++);
+let perfil=Object.keys(p).reduce((a,b)=>p[a]>=p[b]?a:b);
+let dados={
+solar:["☀️ Perfil Solar Fotovoltaico","Você demonstra interesse por eletricidade, tecnologia e sistemas fotovoltaicos."],
+eolica:["💨 Perfil Energia Eólica","Você demonstra interesse por máquinas, física, turbinas e tecnologia."],
+manutencao:["🔧 Perfil Manutenção e Sistemas","Você demonstra interesse por atividades práticas, testes e resolução de problemas."],
+sustentabilidade:["🌱 Perfil Sustentabilidade","Você demonstra interesse por meio ambiente, eficiência energética e soluções sustentáveis."]
+};
+document.getElementById("titulo").textContent=dados[perfil][0];
+document.getElementById("texto").textContent=dados[perfil][1];
+document.getElementById("porcentagem").textContent="Compatibilidade: "+Math.round(p[perfil]/10*100)+"%";
+document.getElementById("resultado").style.display="block";
+document.getElementById("resultado").scrollIntoView({behavior:"smooth"});
+});
+</script>
+</body>
+</html>
